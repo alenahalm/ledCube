@@ -1,259 +1,101 @@
-int ledpins[] = {3,9,10,11};
-int groundpins[] = {5,6};
-void setup ()
-{
-  for(int i = 0; i < 4; i++)
-  {       
-      pinMode(ledpins[i],OUTPUT);
-  }                         
-  for (int i= 0; i<2; i++)
-  {pinMode(groundpins[i],OUTPUT);}
+#define pin_1 5
+#define pin_2 6
+#define pin_3 3
+#define pin_4 9
+#define pin_5 10
+#define pin_6 11
 
+const int delay_ms = 2500;
+
+uint8_t led_clear[6] = {1, 1, 0, 0, 0, 0};
+
+uint8_t led_1[6] = {0, 1, 1, 0, 0, 0};
+uint8_t led_6[6] = {1, 0, 0, 0, 1, 0};
+
+void turnOnLedMatrix(uint8_t val[6], bool with_delay = true) {
+  digitalWrite(pin_1, val[0]);
+  digitalWrite(pin_2, val[1]);
+  digitalWrite(pin_3, val[2]);
+  digitalWrite(pin_4, val[3]);
+  digitalWrite(pin_5, val[4]);
+  digitalWrite(pin_6, val[5]);
+  if (with_delay) {
+    delay(delay_ms);    
+  }
 }
 
-void loop()
-{
-twist();
-drop();
-diagonal();
+void turnOnLedMatrixAdv(uint8_t val_1[6], uint8_t val_2[6]) {
+  turnOnLedMatrix(val_1, false);
+  delay(5);
+  turnOnLedMatrix(led_clear, false);
+  // delay(5);
+  turnOnLedMatrix(val_2, false);
+  delay(5);
+  turnOnLedMatrix(led_clear, false);
 }
 
-void twist()
-{
-  int delaytime=100;
-  digitalWrite(groundpins[0], HIGH);
-  delay(100);   
-  digitalWrite(ledpins[0], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[1], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[2], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[3], HIGH);
-  delay(delaytime);
- 
-   digitalWrite(ledpins[0], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[1], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[2], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[3], LOW); 
-  delay(delaytime);
-  digitalWrite(groundpins[0], LOW);
-
-
-
-
-  digitalWrite(groundpins[1], HIGH);
-  delay(100);   
-  digitalWrite(ledpins[1], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[2], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[3], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[0], HIGH);
-  delay(delaytime);
- 
-  digitalWrite(ledpins[1], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[2], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[3], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[0], LOW); 
-  delay(delaytime);
-  digitalWrite(groundpins[1], LOW);
- 
- 
-  digitalWrite(groundpins[0], HIGH);
-  delay(100);   
-  digitalWrite(ledpins[2], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[3], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[0], HIGH);
-  delay(delaytime);               
-  digitalWrite(ledpins[1], HIGH);
-  delay(delaytime);
- 
-  digitalWrite(ledpins[2], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[3], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[0], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[1], LOW); 
-  delay(delaytime);
-  digitalWrite(groundpins[0], LOW);
- 
-  digitalWrite(groundpins[1], HIGH);
-  delay(100);   
-  digitalWrite(ledpins[3], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[0], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[1], HIGH); 
-  delay(delaytime);               
-  digitalWrite(ledpins[2], HIGH);
-  delay(delaytime);
- 
-  digitalWrite(ledpins[3], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[0], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[1], LOW); 
-  delay(delaytime);               
-  digitalWrite(ledpins[2], LOW); 
-  delay(delaytime);
-  digitalWrite(groundpins[1], LOW);
+void setup() {
+  Serial.begin(9600);
+  pinMode(pin_1, OUTPUT);
+  pinMode(pin_2, OUTPUT);
+  pinMode(pin_3, OUTPUT);
+  pinMode(pin_4, OUTPUT);
+  pinMode(pin_5, OUTPUT);
+  pinMode(pin_6, OUTPUT);
 }
 
-void drop()
-{
-  int dtime = 75;
-  digitalWrite(groundpins[0], HIGH);
-  digitalWrite(ledpins[0], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[0], LOW);
-  digitalWrite(groundpins[1],HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[1], LOW);
-  digitalWrite(ledpins[0], LOW);
- 
-  digitalWrite(groundpins[0], HIGH);
-  digitalWrite(ledpins[1], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[0], LOW);
-  digitalWrite(groundpins[1], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[1], LOW);
-  digitalWrite(ledpins[1], LOW);
- 
-  digitalWrite(groundpins[0], HIGH);
-  digitalWrite(ledpins[2], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[0], LOW);
-  digitalWrite(groundpins[1], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[1], LOW);
-  digitalWrite(ledpins[2], LOW);
- 
-  digitalWrite(groundpins[0], HIGH);
-  digitalWrite(ledpins[3], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[0], LOW);
-  digitalWrite(groundpins[1], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[1], LOW);
-  digitalWrite(ledpins[3], LOW);
- 
- 
-  digitalWrite(groundpins[0], HIGH);
-  digitalWrite(ledpins[0], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[0], LOW);
-  digitalWrite(groundpins[1],HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[1], LOW);
-  digitalWrite(ledpins[0], LOW);
- 
-  digitalWrite(groundpins[0], HIGH);
-  digitalWrite(ledpins[1], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[0], LOW);
-  digitalWrite(groundpins[1], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[1], LOW);
-  digitalWrite(ledpins[1], LOW);
- 
-  digitalWrite(groundpins[0], HIGH);
-  digitalWrite(ledpins[2], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[0], LOW);
-  digitalWrite(groundpins[1], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[1], LOW);
-  digitalWrite(ledpins[2], LOW);
- 
-  digitalWrite(groundpins[0], HIGH);
-  digitalWrite(ledpins[3], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[0], LOW);
-  digitalWrite(groundpins[1], HIGH);
-  delay(dtime);
-  digitalWrite(groundpins[1], LOW);
-  digitalWrite(ledpins[3], LOW);
- 
- 
-}
+void loop() {
+  // // 1
+  // turnOnLedMatrix(new uint8_t[6]{0, 1, 1, 0, 0, 0});
 
-void diagonal()
-{
-int dtime= 100;
-//bottom pin 0 on
-digitalWrite(groundpins[1], HIGH);
-digitalWrite(ledpins[0], HIGH);
-delay(dtime);
-//bottom pin 0 off
-digitalWrite(groundpins[1], LOW);
-digitalWrite(ledpins[0], LOW);
-delay(dtime);
-//top pin 1 on
-digitalWrite(groundpins[0], HIGH);
-digitalWrite(ledpins[1], HIGH);
-delay(dtime);
-//top pin 1 off
-digitalWrite(groundpins[0], LOW);
-digitalWrite(ledpins[1], LOW);
-//bottom pin 2 on
-digitalWrite(groundpins[1], HIGH);
-digitalWrite(ledpins[2], HIGH);
-delay(dtime);
-//bottom pin 2 off
-digitalWrite(groundpins[1], LOW);
-digitalWrite(ledpins[2], LOW);
-  //top pin 3 on
-digitalWrite(groundpins[0], HIGH);
-digitalWrite(ledpins[3], HIGH);
-delay(dtime);
-//top pin 3 off
-digitalWrite(groundpins[0], LOW);
-digitalWrite(ledpins[3], LOW);
+  // // 2
+  // turnOnLedMatrix(new uint8_t[6]{1, 0, 1, 0, 0, 0});
 
+  // // 3
+  // turnOnLedMatrix(new uint8_t[6]{0, 1, 0, 1, 0, 0});
 
+  // // 4
+  // turnOnLedMatrix(new uint8_t[6]{1, 0, 0, 1, 0, 0});
 
+  // // 5
+  // turnOnLedMatrix(new uint8_t[6]{0, 1, 0, 0, 1, 0});
 
+  // // 6
+  // turnOnLedMatrix(new uint8_t[6]{1, 0, 0, 0, 1, 0});
 
-//top pin 0 on
-digitalWrite(groundpins[0], HIGH);
-digitalWrite(ledpins[0], HIGH);
-delay(dtime);
-//top pin 0 off
-digitalWrite(groundpins[0], LOW);
-digitalWrite(ledpins[0], LOW);
-delay(dtime);
-//bottom pin 1 on
-digitalWrite(groundpins[1], HIGH);
-digitalWrite(ledpins[1], HIGH);
-delay(dtime);
-//bottom pin 1 off
-digitalWrite(groundpins[1], LOW);
-digitalWrite(ledpins[1], LOW);
-//top pin 2 on
-digitalWrite(groundpins[0], HIGH);
-digitalWrite(ledpins[2], HIGH);
-delay(dtime);
-//top pin 2 off
-digitalWrite(groundpins[0], LOW);
-digitalWrite(ledpins[2], LOW);
-  //bottom pin 3 on
-digitalWrite(groundpins[1], HIGH);
-digitalWrite(ledpins[3], HIGH);
-delay(dtime);
-//bottom pin 3 off
-digitalWrite(groundpins[1], LOW);
-digitalWrite(ledpins[3], LOW);
+  // // 7
+  // turnOnLedMatrix(new uint8_t[6]{0, 1, 0, 0, 0, 1});
 
+  // // 8
+  // turnOnLedMatrix(new uint8_t[6]{1, 0, 0, 0, 0, 1});
+
+  // // 1, 2
+  // turnOnLedMatrix(new uint8_t[6]{0, 0, 1, 0, 0, 0});
+
+  // // 1, 3
+  // turnOnLedMatrix(new uint8_t[6]{0, 1, 1, 1, 0, 0});
+
+  // // 1, 4
+  // turnOnLedMatrixAdv(new uint8_t[6]{0, 1, 1, 0, 0, 0}, new uint8_t[6]{1, 0, 0, 1, 0, 0});
+
+  // // 1, 5
+  // turnOnLedMatrix(new uint8_t[6]{0, 1, 1, 0, 1, 0});
+
+  // 1, 6
+  turnOnLedMatrixAdv(led_1, led_6);
+
+  // // 1, 7
+  // turnOnLedMatrix(new uint8_t[6]{0, 1, 1, 0, 0, 1});
+
+  // // 1, 8
+  // turnOnLedMatrixAdv(new uint8_t[6]{0, 1, 1, 0, 0, 0}, new uint8_t[6]{1, 0, 0, 0, 0, 1});
+
+  // // 1, 2, 4, 6, 8
+  // turnOnLedMatrixAdv(new uint8_t[6]{0, 1, 1, 0, 0, 0}, new uint8_t[6]{1, 0, 1, 1, 1, 1});
+
+  // // 5, 6
+  // turnOnLedMatrix(new uint8_t[6]{0, 0, 0, 0, 1, 0});
+
+  // // 7, 8
+  // turnOnLedMatrix(new uint8_t[6]{0, 0, 0, 0, 0, 1});
 }
